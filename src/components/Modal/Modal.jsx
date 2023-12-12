@@ -2,8 +2,11 @@ import React, { useEffect } from 'react';
 import css from './Modal.module.css';
 import * as basicLightbox from 'basiclightbox';
 
-
-export const Modal = ({ currentImageUrl, currentImageDescription, onClose, }) => {
+export const Modal = ({
+  currentImageUrl,
+  currentImageDescription,
+  onClose,
+}) => {
   const handleClickImage = () => {
     const instance = basicLightbox.create(`
       <img src="${currentImageUrl}" alt="${currentImageDescription}" >
@@ -35,7 +38,6 @@ export const Modal = ({ currentImageUrl, currentImageDescription, onClose, }) =>
     <div className={css.overlay} onClick={handleClickBackdrop}>
       <div className={css.modal}>
         <img
-        
           src={currentImageUrl}
           alt={currentImageDescription}
           loading="lazy"
@@ -45,4 +47,3 @@ export const Modal = ({ currentImageUrl, currentImageDescription, onClose, }) =>
     </div>
   );
 };
-
