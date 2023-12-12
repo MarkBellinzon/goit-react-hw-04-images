@@ -1,53 +1,48 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import css from './Modal.module.css';
 import * as basicLightbox from 'basiclightbox';
 
-export class Modal extends Component {
-  handleClickImage = () => {
-    const { currentImageUrl, currentImageDescription } = this.props;
 
+export const Modal = ({ currentImageUrl, currentImageDescription, onClose, }) => {
+  const handleClickImage = () => {
     const instance = basicLightbox.create(`
-      <img src="${currentImageUrl}" alt="${currentImageDescription}"  width="800" height="600">
+      <img src="${currentImageUrl}" alt="${currentImageDescription}" >
     `);
-
     instance.show();
   };
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-  }
-
-  handleClickBackdrop = e => {
+  const handleClickBackdrop = e => {
     if (e.target === e.currentTarget) {
-      this.props.onClose();
+      onClose();
     }
   };
 
-  handleKeyDown = e => {
-    if (e.code === 'Escape') {
-      this.props.onClose();
-    }
-  };
+  useEffect(() => {
+    const handleKeyDown = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
 
-  render() {
-    const { currentImageUrl, currentImageDescription, onClose } = this.props;
+    window.addEventListener('keydown', handleKeyDown);
 
-    return (
-      <div className={css.overlay} onClick={onClose}>
-        <div className={css.modal}>
-          <img
-            src={currentImageUrl}
-            alt={currentImageDescription}
-            loading="lazy"
-            onClick={this.handleClickImage}
-          />
-        </div>
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
+  return (
+    <div className={css.overlay} onClick={handleClickBackdrop}>
+      <div className={css.modal}>
+        <img
+        
+          src={currentImageUrl}
+          alt={currentImageDescription}
+          loading="lazy"
+          onClick={handleClickImage}
+        />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
