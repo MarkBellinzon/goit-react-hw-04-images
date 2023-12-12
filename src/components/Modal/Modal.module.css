@@ -1,0 +1,37 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: var(--backdrop-bg-color);
+}
+
+.modal {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 280px;
+  height: auto;
+
+  background-color: var(--main-bg-color);
+  box-shadow: var(--box-shadow);
+}
+
+@media screen and (min-width: 768px) {
+  .modal {
+    width: 600px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .modal {
+    width: 900px;
+  }
+}
+
+
